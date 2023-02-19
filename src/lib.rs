@@ -1,9 +1,9 @@
 use std::convert::Infallible;
 
 use unicode_segmentation::UnicodeSegmentation;
-use warp::Filter;
+use warp::{Filter, Rejection, Reply};
 
-pub fn server() -> impl Filter<Extract = (impl warp::Reply,), Error = warp::Rejection> + Clone {
+pub fn server() -> impl Filter<Extract = (impl Reply,), Error = Rejection> + Clone {
     let greeting = warp::path("greeting")
         .and(warp::get())
         .and(warp::header("authorization"))
@@ -55,4 +55,9 @@ async fn handler(auth: String) -> Result<impl warp::Reply, Infallible> {
         format!("Hello, {}!", emojis.join(" ")),
         warp::http::StatusCode::OK,
     ))
+}
+
+#[shuttle_service::main]
+async fn warp() -> shuttle_service::ShuttleWarp<(impl Reply,)> {
+    Ok(server().boxed())
 }
