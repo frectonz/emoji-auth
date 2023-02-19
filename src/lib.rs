@@ -3,7 +3,7 @@ use std::convert::Infallible;
 use unicode_segmentation::UnicodeSegmentation;
 use warp::{Filter, Rejection, Reply};
 
-pub fn server() -> impl Filter<Extract = (impl Reply,), Error = Rejection> + Clone {
+fn server() -> impl Filter<Extract = (impl Reply,), Error = Rejection> + Clone {
     let greeting = warp::path("greeting")
         .and(warp::get())
         .and(warp::header("authorization"))
