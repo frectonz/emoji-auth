@@ -1,4 +1,4 @@
-const res = await fetch("http://localhost:3030/greeting", {
+const res = await fetch("https://emoji-auth.shuttleapp.rs/", {
   headers: {
     Authorization: `Emoji ${encodeURIComponent("🐱🐶🐧🐤")}`,
   },
